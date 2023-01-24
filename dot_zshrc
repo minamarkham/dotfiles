@@ -1,0 +1,58 @@
+#!/usr/bin/env zsh
+
+clear
+
+export DROPBOX=$HOME/Dropbox
+export DOTFILES=$HOME/.dotfiles
+export ZSH_DIR=$HOME/.zsh
+export PROJECTS=$HOME/@Projects
+export BEYHIVE=$PROJECTS/@beyhive
+export WIP=$PROJECTS/@wip
+
+# History setup
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=100000
+SAVEHIST=$HISTSIZ
+
+setopt hist_ignore_all_dups # remove older duplicate entries from history
+setopt hist_reduce_blanks # remove superfluous blanks from history items
+setopt inc_append_history # save history entries as soon as they are entered
+setopt share_history # share history between different instances of the shell
+setopt auto_cd # cd by typing directory name if it's not a command
+setopt correct # autocorrect
+setopt correct_all # autocorrect commands
+setopt auto_list # automatically list choices on ambiguous completion
+setopt auto_menu # automatically use menu completion
+setopt always_to_end # move cursor to end if word had one match
+
+# Completion system
+autoload -Uz compinit && compinit
+autoload bashcompinit && bashcompinit # load bashcompinit for some old bash completions
+
+###############################################################################
+# Load the shell dotfiles, and then some:
+###############################################################################
+source $HOME/.zpm/zpm.zsh
+source $ZSH_DIR/yonce/yonce.zsh
+source $HOME/.path
+source $HOME/.aliases
+source $HOME/.functions
+source $HOME/.company
+
+###############################################################################
+# PLUGINS && APPS
+###############################################################################
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [[ ! -f ~/.zpm/zpm.zsh ]]; then
+  git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
+fi
+
+zpm load zpm-zsh/ls
+
+###############################################################################
+# AUTOMATICALLY ADDED / TO BE SORTED
+###############################################################################

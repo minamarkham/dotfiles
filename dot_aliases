@@ -1,0 +1,64 @@
+#!/usr/bin/env zsh
+
+# Shortcuts
+alias copyssh="pbcopy < $HOME/.ssh/id_ed25519.pub"
+alias reloadshell="source $HOME/.zshrc"
+alias reloaddns="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
+alias shrug="echo '¯\_(ツ)_/¯' | pbcopy"
+alias c="clear"
+alias compile="commit 'compile'"
+alias version="commit 'version'"
+alias ls="exa --long --header --icons --all"
+alias profile='code ~/.zprofile'
+alias aliases='code ~/.aliases'
+alias git=hub
+alias -s txt="code -t"
+alias less='less -FSRXc'
+alias ~="cd ~"
+alias rm='rm -i'
+
+# Directories
+alias dotfiles="cd $DOTFILES"
+alias library="cd $HOME/Library"
+alias projects="cd $PROJECTS"
+alias cupcake="cd $PROJECTS/@cupcake"
+
+# JS
+alias nfresh="rm -rf node_modules/ package-lock.json && npm install"
+alias watch="npm run watch"
+
+# Docker
+alias docker-composer="docker-compose"
+
+# Git
+alias gst="git status"
+alias gb="git branch"
+alias gc="git checkout"
+alias gl="git log --oneline --decorate --color"
+alias amend="git add . && git commit --amend --no-edit"
+alias add="git add ."
+alias branch="git checkout -b"
+alias commit="git add . && git commit -m"
+alias diff="git diff"
+alias force="git push --force"
+alias nuke="git clean -df && git reset --hard"
+alias pop="git stash pop"
+alias pull="git pull"
+alias push="git push"
+alias resolve="git add . && git commit --no-edit"
+alias stash="git stash -u"
+alias unstage="git restore --staged ."
+alias wip="commit wip"
+alias tickle='git status -s | cut -c4- | xargs touch'
+
+# macOS
+alias cleanupDS="find . -type f -name '*.DS_Store' -ls -delete" # Recursively delete .DS_Store files
+alias showFiles='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder' # Show/Hide hidden files in Finder
+alias hideFiles='defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder'
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder" # Hide/show all desktop icons (useful when presenting)
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias editHosts='code /etc/hosts' # Edit /etc/hosts file
+
+if [ -f ./pensieve ]; then
+    source ./pensieve
+fi

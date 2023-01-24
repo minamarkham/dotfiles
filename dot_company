@@ -1,0 +1,44 @@
+#!/usr/bin/env zsh
+
+export SLACK_SYNC_DEV_AUTO_ATTACH=1
+export SSH_USER=mina
+
+# PDE SETUP || 2022-02-11T02:04:21-0800
+##############################################
+/usr/bin/ssh-add -A >/dev/null 2>&1
+##############################################
+
+alias webapp="cd ~/@Projects/@tinyspeck/webapp"
+alias tsimages="./node_modules/.bin/imagemin-slack"
+alias addkey="ssh-add ~/.ssh/id_rsa && ssh-add -l"
+alias attach="slack checkpoint --attach"
+alias detach="slack checkpoint --detach"
+alias remote="slack remote-dev"
+alias buildy="slack run buildy:watch:gantry-v2"
+alias docs="npm run docusaurus start"
+alias static="slack run static-build"
+alias clogs='./thrift_idl/regenerate.sh'
+alias slackpress="cd ~/@Projects/@tinyspeck/webapp/slackpress/wordpress/wp-content/"
+alias buildycold="NO_NPM_INSTALL=1 slack run buildy:watch:gantry-v2 --no-hot"
+alias ffshhvm='killall hhvm && hh_client restart && hh_client'
+
+## sql tunnel
+alias tdev='tunnel dev'
+alias tprod='tunnel prod'
+
+function tunnel() {
+	echo "DB Tunnel [$1]"
+	cli_host=$(slack ssh-cli --print --$1)
+	vthost=$(ssh $cli_host consul catalog nodes -service=vitess-vtgate -datacenter=$1-us-east-1-vitess1 | grep vtgate-cli-$1 | shuf -n 1 | awk '{print $1}')
+	slack mysql-tunnel $vthost
+}
+
+function sync() { slack remote-dev -b $1 }
+
+function remotessh() { slack ssh-dev --env=dev$1 }
+
+function genapi() { hhvm cli/schemas/generate.php -m $1 }
+
+function jest() { npm run jest $1 }
+
+function compress { $HOME/node_modules/.bin/imagemin-slack $1 }

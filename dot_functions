@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+function tabname { echo -e "\033]0;${1:?please specify a title}\007" ; }
+
+# checks if branch has something pending
+function parse_git_dirty() { git diff --quiet --ignore-submodules HEAD 2>/dev/null; [ $? -eq 1 ] && echo "*" }
+
+# gets the current git branch
+function parse_git_branch() { git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/" }
+
+# Better cd
+cd() { builtin cd "$@" && [ -f ".nvmrc" ] && nvm use; }

@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 clear
+
 export EDITOR=code
 export VISUAL=$EDITOR
 export DROPBOX=$HOME/Dropbox
@@ -31,6 +32,28 @@ autoload -Uz compinit && compinit
 autoload bashcompinit && bashcompinit # load bashcompinit for some old bash completions
 
 ###############################################################################
+# INSTALL DEPS
+###############################################################################
+
+if [[ ! -f ~/.zpm/zpm.zsh ]]; then
+  git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
+fi
+
+if [[ ! -f ~/.company ]]; then
+  touch ~/.company
+fi
+
+###############################################################################
+# PLUGINS && SUCH
+###############################################################################
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+zpm load zpm-zsh/ls
+
+###############################################################################
 # Load the shell dotfiles, and then some:
 ###############################################################################
 source $HOME/.zpm/zpm.zsh
@@ -39,20 +62,6 @@ source $HOME/.path
 source $HOME/.aliases
 source $HOME/.functions
 source $HOME/.company
-
-###############################################################################
-# PLUGINS && APPS
-###############################################################################
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-if [[ ! -f ~/.zpm/zpm.zsh ]]; then
-  git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
-fi
-
-zpm load zpm-zsh/ls
 
 ###############################################################################
 # AUTOMATICALLY ADDED / TO BE SORTED

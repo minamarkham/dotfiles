@@ -1,0 +1,72 @@
+#!/usr/bin/env zsh
+
+###############################################################################
+# VARIABLES
+###############################################################################
+
+EMOJIONE_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/emojione/emojione-assets/releases/latest)
+EMOJIONE_VERSION=$(get_github_version $EMOJIONE_RELEASE)
+EMOJIONE_URL="https://github.com/emojione/emojione-assets/releases/download/$EMOJIONE_VERSION/emojione-apple.ttc"
+
+SLAY_SSH_CONFIG="$HOME/Dropbox/the.setup/config.symlink"
+SLAY_WALLPAPER="$HOME/Dropbox/the.setup/desktop/wallpapers/mina.jpg"
+SLAY_HOSTNAME="Peppermint"
+
+###############################################################################
+# CUSTOMIZATIONS
+###############################################################################
+step "Cloning repositories..."
+
+git clone git@github.com:minamarkham/dotfiles.git $HOME/.dotfiles
+
+git clone git@github.com:minamarkham/cupcake.git $PROJECTS/@cupcake
+git clone git@github.com:minamarkham/mdash.wtf.git $PROJECTS/@mdash
+git clone git@github.com:minamarkham/setup.git $PROJECTS/setup
+git clone git@github.com:minamarkham/speedlify.git $PROJECTS/speedlify
+git clone git@github.com:minamarkham/twitter-archive.git $PROJECTS/twitter-archive
+git clone git@github.com:minamarkham/minamarkham.git $PROJECTS/minamarkham
+
+git clone git@github.com:minamarkham/yonce.git $BEYHIVE/yonce
+git clone git@github.com:minamarkham/yonce-vscode.git  $BEYHIVE/yonce-vscode
+git clone git@github.com:minamarkham/yonce-prompt.git $BEYHIVE/yonce-prompt
+git clone git@github.com:minamarkham/yonce-visual-studio.git  $BEYHIVE/yonce-visual-studio
+
+git clone git@github.com:minamarkham/formation.git $BEYHIVE/formation
+git clone git@github.com:minamarkham/httpbey.git $BEYHIVE/httpbey
+git clone git@github.com:minamarkham/711ty.git $BEYHIVE/711ty
+
+git clone git@github.com:minamarkham/beyonce-ipsum.git $WIP/beyonce-ipsum
+git clone git@github.com:minamarkham/xo.git  $WIP/XO
+git clone git@github.com:minamarkham/beygifs.git $WIP/beygifs
+git clone git@github.com:minamarkham/partition.git  $WIP/partition
+
+step "Symlinking dotfiles…"
+link_file $SLAY_SSH_CONFIG $HOME/.ssh/
+symlinking
+
+step "Customizing Mac…"
+# scutil --set ComputerName $SLAY_HOSTNAME && \
+# scutil --set HostName $SLAY_HOSTNAME && \
+# scutil --set LocalHostName $SLAY_HOSTNAME && \
+# defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $SLAY_HOSTNAME
+echo "${indent}  ❤︎ Setting computer name…"
+
+# sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '$SLAY_WALLPAPER'" && killall Dock
+echo "${indent}  ︎︎❤︎ Setting desktop background…"
+
+# defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder
+echo "${indent}  ︎︎❤︎ Showing hidden files…"
+
+# defaults write com.apple.screencapture type jpg
+# defaults write com.apple.screencapture location $SLAY_SCREENSHOTS
+# killall SystemUIServer
+echo "${indent}  ︎︎❤︎ Configuring screenshots…"
+
+step "Switching emojis to EmojiOne…"
+if [ ! -f ~/Library/Fonts/emojione-apple.ttc ]; then
+    echo_install "  EmojiOne"
+    wget -P ~/Library/Fonts $EMOJIONE_URL --quiet
+    print_in_green "${bold}✓ done!${normal}\n"
+else
+    print_muted "${indent}✓ EmojiOne already installed. Skipped."
+fi

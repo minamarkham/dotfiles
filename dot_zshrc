@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
 clear
-
+export EDITOR=code
+export VISUAL=$EDITOR
 export DROPBOX=$HOME/Dropbox
 export DOTFILES=$HOME/.dotfiles
 export ZSH_DIR=$HOME/.zsh

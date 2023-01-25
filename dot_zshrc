@@ -2,7 +2,7 @@
 
 clear
 
-export EDITOR=code
+export EDITOR=nano
 export VISUAL=$EDITOR
 export DROPBOX=$HOME/Dropbox
 export DOTFILES=$HOME/.dotfiles
@@ -39,9 +39,19 @@ if [[ ! -f ~/.zpm/zpm.zsh ]]; then
   git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
 fi
 
-if [[ ! -f ~/.company ]]; then
-  touch ~/.company
+if [[ ! -f ~/.extra ]]; then
+  touch ~/.extra
 fi
+
+###############################################################################
+# Load the shell dotfiles, and then some:
+###############################################################################
+source $HOME/.zpm/zpm.zsh
+source $ZSH_DIR/yonce/yonce.zsh
+source $HOME/.path
+source $HOME/.aliases
+source $HOME/.functions
+source $HOME/.extra
 
 ###############################################################################
 # PLUGINS && SUCH
@@ -52,16 +62,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 zpm load zpm-zsh/ls
-
-###############################################################################
-# Load the shell dotfiles, and then some:
-###############################################################################
-source $HOME/.zpm/zpm.zsh
-source $ZSH_DIR/yonce/yonce.zsh
-source $HOME/.path
-source $HOME/.aliases
-source $HOME/.functions
-source $HOME/.company
 
 ###############################################################################
 # AUTOMATICALLY ADDED / TO BE SORTED

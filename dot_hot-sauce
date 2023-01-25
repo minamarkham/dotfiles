@@ -84,6 +84,9 @@ else
 	print_error "fileicon must be installed! Skipping."
 fi
 
+step "Symlinking files…"
+symlink_dotfiles
+printf "\n"
 
 step "Cloning repositories..."
 

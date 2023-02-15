@@ -2,15 +2,6 @@
 
 clear
 
-export EDITOR=nano
-export VISUAL=$EDITOR
-export DROPBOX=$HOME/Dropbox
-export DOTFILES=$HOME/.dotfiles
-export ZSH_DIR=$HOME/.zsh
-export PROJECTS=$HOME/@Projects
-export BEYHIVE=$PROJECTS/@beyhive
-export WIP=$PROJECTS/@wip
-
 # History setup
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
@@ -34,7 +25,6 @@ autoload bashcompinit && bashcompinit # load bashcompinit for some old bash comp
 ###############################################################################
 # INSTALL DEPS
 ###############################################################################
-
 if [[ ! -f ~/.zpm/zpm.zsh ]]; then
   git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
 fi
@@ -44,25 +34,36 @@ if [[ ! -f ~/.extra ]]; then
 fi
 
 ###############################################################################
-# Load the shell dotfiles, and then some:
+# PLUGINS && SUCH
 ###############################################################################
 source $HOME/.zpm/zpm.zsh
-source $ZSH_DIR/yonce/yonce.zsh
+zpm load zpm-zsh/ls
+
+###############################################################################
+# EXPORTS
+###############################################################################
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export EDITOR=nano
+export VISUAL=$EDITOR
+export DROPBOX=$HOME/Dropbox
+export DOTFILES=$HOME/.dotfiles
+export PROJECTS=$HOME/@Projects
+export BEYHIVE=$PROJECTS/@beyhive
+export WIP=$PROJECTS/@wip
+
+###############################################################################
+# Load the shell dotfiles, and then some:
+###############################################################################
+source $HOME/.zsh/yonce/yonce.zsh
 source $HOME/.path
 source $HOME/.aliases
 source $HOME/.functions
 source $HOME/.extra
 
 ###############################################################################
-# PLUGINS && SUCH
+# PDE SETUP || 2022-02-11T02:04:21-0800
 ###############################################################################
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-zpm load zpm-zsh/ls
-
-###############################################################################
-# AUTOMATICALLY ADDED / TO BE SORTED
-###############################################################################
+/usr/bin/ssh-add -A >/dev/null 2>&1

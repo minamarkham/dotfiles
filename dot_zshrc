@@ -25,8 +25,8 @@ autoload bashcompinit && bashcompinit # load bashcompinit for some old bash comp
 ###############################################################################
 # INSTALL DEPS
 ###############################################################################
-if [[ ! -f ~/.zpm/zpm.zsh ]]; then
-  git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
+if [[ ! -f ~/.zsh/antigen.zsh ]]; then
+  curl -L git.io/antigen > ~/.zsh/antigen.zsh
 fi
 
 if [[ ! -f ~/.extra ]]; then
@@ -36,8 +36,8 @@ fi
 ###############################################################################
 # PLUGINS && SUCH
 ###############################################################################
-source $HOME/.zpm/zpm.zsh
-zpm load zpm-zsh/ls
+source $HOME/.zsh/antigen.zsh
+antigen bundle zpm-zsh/ls
 
 ###############################################################################
 # EXPORTS
@@ -57,11 +57,19 @@ export WIP=$PROJECTS/@wip
 ###############################################################################
 # Load the shell dotfiles, and then some:
 ###############################################################################
-source $HOME/.zsh/yonce/yonce.zsh
+if [[ ! -f ~/.zsh/yonce/yonce.zsh ]]
+  antigen theme geometry-zsh/geometry
+then
+else
+  source $HOME/.zsh/yonce/yonce.zsh
+fi
+
 source $HOME/.path
 source $HOME/.aliases
 source $HOME/.functions
 source $HOME/.extra
+
+antigen apply
 
 ###############################################################################
 # PDE SETUP || 2022-02-11T02:04:21-0800

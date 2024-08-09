@@ -22,14 +22,12 @@ This are my public dotfiles. These are config files to set up a system the way I
 
 ## Getting started
 
-Check out the [Quick Start](https://www.chezmoi.io/quick-start/) page.
-
 ### Install chezmoi and the dotfiles on any new machine
 
 With a single command:
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply minamarkham
+chezmoi init --apply git@github.com:minamarkham/dotfiles.git
 ```
 
 ### Update
@@ -40,10 +38,37 @@ On any machine, you can pull and apply the latest changes from your repo with:
 chezmoi update -v
 ```
 
+### Add
+
+```sh
+chezmoi add ~/.zshrc
+```
+
+### Edit
+
+```sh
+chezmoi edit ~/.zshrc
+```
+
+### Preview
+
+```sh
+chezmoi diff
+```
+
+### Apply
+
+```sh
+chezmoi -v apply
+```
+
 ## Synced Elsewhere
 - Raycast
+  - Cloud Sync
 - Visual Studio Code
+  - Settings Sync
 - Hazel
+  - Dropbox Sync
 
 ## License
 

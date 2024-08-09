@@ -40,8 +40,12 @@ On any machine, you can pull and apply the latest changes from your repo with:
 chezmoi update -v
 ```
 
-License
--------
+## Synced Elsewhere
+- Raycast
+- Visual Studio Code
+- Hazel
+
+## License
 
 The code is available under the [MIT license][license].
 

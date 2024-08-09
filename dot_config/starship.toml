@@ -1,0 +1,183 @@
+#* ~/.config/starship.toml
+
+#* SOURCES
+#* https://starship.rs/config
+#* https://starship.rs/presets/nerd-font.html##configuration
+
+#   Yoncé all on his mouth like liquor
+# ┌ user   hostname   ~/full/directory/path   branch ↑1 ↓1 {1} +1 •1 ⌀1               [  00:00 ]   100%↓
+# └ cd .bash-it/themes/yonce
+
+# git-status-demo on  main ↑1↓1 +1 !1 ⌀1 [1]   1 ERROR  ❯                                  ⚡78%  00:11:57
+# git-status-demo on  main ↑1↓1 +1 !1 ⌀1 [1] via  v18.18.2   127 NOTFOUND  ❯
+# webapp on 󰊢 ui-generator-hooks ↑4039↓5 +1 !1 ⌀73 {1} took ⏱ 1m34s ❯                       ⚡78%  17:50:56
+
+#* DEBUG via:
+#* starship explain
+#* STARSHIP_LOG=trace starship timings
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+#* Timeout for commands executed by starship (ms)
+command_timeout = 10000
+
+#* newline between commands
+# add_newline = false
+
+#* opt-in for individual modules (e.g., aws, docker, gcloud, nodejs, python)
+format = """$all"""
+right_format = """$battery$time"""
+
+# format = """
+# [╭─accounts─➜⇉❯>](bold blue) $username$gcloud$aws$kubernetes
+# [┣─network──➜⇉❯>](bold yellow) $localip
+# [┣─system───➜⇉❯>](green) $time$status$cmd_duration$hostname$memory_usage$jobs$battery
+# [┣─project──➜⇉❯>](bold red) $directory$rust$package$golang$terraform $docker_context
+# [┣─git────➜⇉❯>](bold blue)$git_branch$git_status$git_commit
+# [┣─metrics➜⇉❯>](bold red)$git_metrics
+# [╰─cli─➜⇉❯>](bold green)$character
+# """
+
+#* A continuation prompt that displays two filled in arrows
+# continuation_prompt = '▶▶ '
+
+[username]
+disabled = true
+
+[hostname]
+ssh_only = true
+ssh_symbol = "🌐 "
+disabled = false
+
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂐 "
+discharging_symbol = "󰂍 "
+unknown_symbol = "⚡"
+empty_symbol = ""
+disabled = false
+
+#* "red" style when capacity is between 0% and 20%
+[[battery.display]]
+threshold = 20
+style = "red"
+
+#* "yellow" style when capacity is between 20% and 50%
+[[battery.display]]
+threshold = 50
+style = "yellow"
+
+#* "green" style when capacity is between 70% and 100%
+[[battery.display]]
+threshold = 100
+style = "green"
+
+#* Replace the "❯"
+[character]
+# success_symbol = "[➜](bold green)"
+# error_symbol = "[✖](bold red)"
+
+#* Show command duration over 10,000 milliseconds (=10 sec)
+[cmd_duration]
+# min_time = 500
+format = "took [⏱ $duration]($style) "
+
+#* truncation length works backwards (i.e., cwd > parent > parent ...)
+[directory]
+read_only = ""
+truncation_length = 5
+# truncation_symbol = "…/"
+truncate_to_repo = true
+
+#* Keep in mind that the order matters. For example:
+#* "Important Documents" = " 󰈙 "
+#* will not be replaced, because "Documents" was already substituted before.
+#* So either put "Important Documents" before "Documents" or use the substituted version:
+#* "Important 󰈙 " = " 󰈙 "
+[directory.substitutions]
+"~/Documents" = "󰈙 "
+"~/Downloads" = " "
+"~/Movies" = "󰿎 "
+"~/Music" = " "
+"~/Pictures" = " "
+"~/@Projects" = "♥ "
+"~/@Inbox" = " "
+"~/@WIP" = "󰒡 "
+# "~" = "󰋜 "
+# "/" = "  "
+
+[git_branch]
+symbol = " "
+
+[git_commit]
+commit_hash_length = 8
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = '[ PICKING](bold red)'
+rebase = "REBASING"
+merge =	"MERGING"
+revert = "REVERTING"
+bisect = "BISECTING"
+am = "AM"
+am_or_rebase = "AM/REBASE"
+disabled = false
+
+[git_status]
+conflicted = "✲ " # 
+ahead = "[↑](bold green)${count} " # ⇡
+behind = "[↓](bold red)${count} " # ⇣
+diverged = "[↑](bold green)${ahead_count}[↓](bold red)${behind_count} " # 李
+untracked = "⌀${count} "
+stashed = '\[${count}\] '
+modified = "[!](bold yellow)${count} "
+staged = "[+](bold green)${count} "
+renamed = "»${count} "
+deleted = "[✖](bold red)${count} " # ✘
+format = "$conflicted$ahead_behind$staged$modified$untracked$stashed$deleted$renamed"
+
+[git_metrics]
+added_style = 'bold blue'
+deleted_style = "bold red"
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+# format = '([ Added: +$added]($added_style))([ Deleted: -$deleted]($deleted_style) )'
+disabled = false
+
+[memory_usage]
+symbol = "󰍛 "
+disabled = false
+
+[time]
+format = "[  $time]($style) "
+disabled = false
+
+[nodejs]
+disabled = true
+
+#* makes prompt a single line
+[line_break]
+disabled = true
+
+[localip]
+ssh_only = true
+disabled = false
+
+[sudo]
+style = 'bold green'
+symbol = ' '
+disabled = false
+
+[package]
+symbol = ' '
+disabled = true
+
+#* Clear visibility for exit codes
+[status]
+style = "bg:red"
+symbol = "  "
+not_found_symbol = "  "
+not_executable_symbol = "  "
+format = '[$symbol$status $common_meaning$signal_name$maybe_int ]($style) '
+map_symbol = true
+disabled = false

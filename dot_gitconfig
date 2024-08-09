@@ -5,12 +5,16 @@
 	smudge = git-lfs smudge -- %f
 [push]
 	default = simple
+	autoSetupRemote = true
 [fetch]
 	prune = true
 [core]
-	excludesfile = /Users/mina.markham/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	ignorecase = true
-[includeif "gitdir:~/@Projects/@tinyspeck/"]
+	editor = code --wait
+[includeif "gitdir:~/@Dev/webapp/"]
 	path = .gitconfig-work
-[includeif "gitdir:~/@Projects/@me/"]
+[includeif "gitdir:~/@Dev/@me/"]
+	path = .gitconfig-personal
+[includeif "gitdir:~/@Projects/"]
 	path = .gitconfig-personal

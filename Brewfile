@@ -1,72 +1,190 @@
+###############################################################
+#  ~/Brewfile - Software Installs for MacOS                   #
+#                                                             #
+#  List of packages to be installed / updated via Homebrew    #
+#  Usage, run: $ brew bundle --global --file $HOME/.Brewfile  #
+#  See brew docs for more info: https://docs.brew.sh/Manpage  #
+#                                                             #
+#  License: MIT © Mina Markham 2024 <https://mina.codes>      #
+###############################################################
+
+# Options
+cask_args appdir: '~/Applications'
+
 # Taps
-tap 'homebrew/cask'
-tap 'homebrew/cask-fonts'
-tap 'homebrew/cask-versions'
 tap 'homebrew/bundle'
-tap 'nicoverbruggen/homebrew-cask'
+tap 'homebrew/cask-fonts'
+tap 'buo/cask-upgrade'
 
-# Binaries
-brew 'awscli'
-brew 'bat' # Used for spatie/visit
+###############################################################
+# Command Line                                                #
+###############################################################
+
+# CLI Essentials
+brew 'git'          # Version control
+brew 'starship'
+
+# CLI Basics
+brew 'eza'          # Listing files with info (better ls)
+brew 'micro'
+brew 'zoxide'       # Auto-learning navigation (better cd)
+
+# CLI Monitoring and Performance Apps
+
+# CLI Productivity Apps
 brew 'chezmoi'
-brew 'coreutils' # Those that come with macOS are outdated
-brew 'exa'
-brew 'ffmpeg'
-brew 'gh'
-brew 'git'
-brew 'grep'
-brew 'httpie'
+brew 'mas'
+brew 'fileicon'
+
+# CLI Development Suits
+brew 'httpie'       # HTTP / API testing testing client
+
+# CLI External Sercvices
+
+# CLI Fun
+brew 'neofetch'     # Show system data and ditstro info
+
+# Development Langs, Compilers, Package Managers and SDKs
+brew 'node'           # Node.js
+brew 'nvm'            # Switching node versions
+brew 'python'         # Python interpreter
+
+# DevOps
+
+# Development Utils
+brew 'gh'             # Interact with GitHub PRs, issues, repos
 brew 'hub'
-brew 'jq' # Used for spatie/visit
-brew 'mackup'
-brew 'mas' # Mac App Store manager
-brew 'pkg-config' # https://github.com/driesvints/dotfiles/issues/20
-brew 'svn' # Needed to install fonts
-brew 'tig'
 
-# Spatie Medialibrary
-brew 'jpegoptim'
-brew 'optipng'
-brew 'pngquant'
-brew 'svgo'
-brew 'gifsicle'
+# Network and Security Testing
 
-# Development
-brew 'node'
+# Security Utilities and Data Encryption
 
-# Apps
-cask '1password'
-cask 'discord'
-cask 'docker'
+###############################################################
+# Desktop Applications                                        #
+###############################################################
+
+# Development Apps
+cask 'httpie'           # HTTP / API testing testing client
+cask 'hyper'            # Better terminal emulator
+cask 'sequel-ace'
+cask 'visual-studio-code' # Code editor
+cask 'warp'             # Better terminal emulator
+
+# Creativity
+cask 'canva'
 cask 'figma'
-cask 'firefox'
-cask 'github'
-cask 'google-chrome'
+cask 'fontbase'
+
+mas 'Filmora: Movie & Video Editor', id:1516822341
+mas 'CapCut - Video Editor', id:1500855883
+mas 'ColorSlurp', id:1287239339
+
+# Media
+mas 'Friendly Streaming Browser', id:553245401
+cask 'plex'
+cask 'spotify' # Propietary music streaming
+
+# Personal Applications
+cask '1password'      # Password manager (proprietary)
+cask 'copilot'
+cask 'discord'
+cask 'dropbox'
 cask 'imageoptim'
+cask 'local'
+cask 'quip'
 cask 'slack'
-cask 'visual-studio-code'
-cask 'zoom'
+
+mas 'Bear Markdown Notes', id:1091189122
+mas 'Screen Recorder by Omi', id:1592987853
+mas 'Twingate', id:1501592214
+
+# Browsers
+cask 'google-chrome'
 
 # Fonts
-cask 'font-inconsolata'
+cask 'font-caskaydia-cove-nerd-font'
+cask 'font-monaspace'
+cask 'font-monofur-nerd-font'                 # https://www.programmingfonts.org/#monofur
 
-# Mac App Store
-mas 'AffinityDesigner', id: 824171161
-mas 'AffinityPhoto', id: 824183456
-mas 'Airmail3', id: 918858936
-mas 'AppCleaner', id: 1013897218
-mas 'Bear', id: 1091189122
-mas 'Divvy', id: 413857545
-mas 'Fantastical2', id: 975937182
-mas 'Gifox', id: 1082624744
-mas 'Kaleidoscope', id: 587512244
-mas 'Keynote', id: 409183694
-mas 'Numbers', id: 409203825
-mas 'Pages', id: 409201541
-mas 'Paprika3', id: 1303222628
-mas 'Pixelmator', id: 407963104
-mas 'Pocket', id: 568494494
-mas 'Resizer', id: 411277085
-mas 'Things3', id: 904280696
-mas 'Trello', id: 1278508951
-mas 'TheUnarchiver', id: 425424353
+# Mac OS Quick-Look Plugins
+
+# Mac OS Mods and Improvements
+cask 'bartender'
+cask 'raycast' # Spotlight alternative
+cask 'ubar'
+
+mas 'Hidden Bar', id:1452453066
+
+# Mac OS Utility Apps
+cask 'hazel'
+
+mas 'TinyNotepad', id:1449415412
+
+###############################################################
+# Visual Studio Code Extensions                               #
+###############################################################
+vscode 'aaron-bond.better-comments'
+vscode 'alefragnani.project-manager'
+vscode 'alexcvzz.vscode-sqlite'
+vscode 'anseki.vscode-color'
+vscode 'bierner.color-info'
+vscode 'bierner.emojisense'
+vscode 'bobmagicii.dashyeah'
+vscode 'burkeholland.simple-react-snippets'
+vscode 'cduruk.thrift'
+vscode 'christian-kohler.path-intellisense'
+vscode 'dbaeumer.vscode-eslint'
+vscode 'dionmunk.vscode-notes'
+vscode 'dsznajder.es7-react-js-snippets'
+vscode 'eamodio.gitlens'
+vscode 'esbenp.prettier-vscode'
+vscode 'expo.vscode-expo-tools'
+vscode 'fayras.simple-new-file'
+vscode 'folke.vscode-monorepo-workspace'
+vscode 'fooxly.workspace'
+vscode 'formulahendry.auto-close-tag'
+vscode 'formulahendry.auto-rename-tag'
+vscode 'ginfuru.better-nunjucks'
+vscode 'github.copilot'
+vscode 'github.copilot-chat'
+vscode 'jannisx11.batch-rename-extension'
+vscode 'jrebocho.vscode-random'
+vscode 'lordbrom.highlight-duplicates'
+vscode 'minamarkham.yonce-theme'
+vscode 'mrmlnc.vscode-duplicate'
+vscode 'ms-azuretools.vscode-docker'
+vscode 'ms-vscode-remote.remote-containers'
+vscode 'ms-vscode-remote.remote-ssh'
+vscode 'ms-vscode-remote.remote-ssh-edit'
+vscode 'ms-vscode-remote.remote-wsl'
+vscode 'ms-vscode-remote.vscode-remote-extensionpack'
+vscode 'ms-vscode.remote-explorer'
+vscode 'ms-vscode.remote-server'
+vscode 'ms-vsliveshare.vsliveshare'
+vscode 'naumovs.color-highlight'
+vscode 'nhoizey.gremlins'
+vscode 'pflannery.vscode-versionlens'
+vscode 'pkief.material-icon-theme'
+vscode 'pnp.polacode'
+vscode 'pranayagarwal.vscode-hack'
+vscode 'randomfractalsinc.snippets-viewer'
+vscode 'ronnidc.nunjucks'
+vscode 'samverschueren.final-newline'
+vscode 'shardulm94.trailing-spaces'
+vscode 'sirtori.indenticator'
+vscode 'slack-technologies.vscode-remote-envs'
+vscode 'slack-technologies.vscode-slack-webapp'
+vscode 'streetsidesoftware.code-spell-checker'
+vscode 'stylelint.vscode-stylelint'
+vscode 'tahabasri.snippets'
+vscode 'tamasfe.even-better-toml'
+vscode 'tombonnike.vscode-status-bar-format-toggle'
+vscode 'urbantrout.refactor-css'
+vscode 'usernamehw.errorlens'
+vscode 'vincaslt.highlight-matching-tag'
+vscode 'visualstudioexptteam.intellicode-api-usage-examples'
+vscode 'visualstudioexptteam.vscodeintellicode'
+vscode 'vitaliymaz.vscode-svg-previewer'
+vscode 'wayou.vscode-todo-highlight'
+vscode 'xabikos.javascriptsnippets'
+# EOF

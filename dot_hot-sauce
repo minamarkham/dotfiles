@@ -3,10 +3,12 @@
 ###############################################################################
 # Variables
 ###############################################################################
-WORKSPACE=$DROPBOX/.the.setup
-
-SLAY_SCREENSHOTS="$HOME/@Inbox/@Screenshots"
+WORKSPACE=$DROPBOX/@workspace/setup
+INBOX="$HOME/@Inbox"
+SLAY_SCREENSHOTS="$INBOX/@Screenshots"
 SLAY_HOSTNAME="Peppermint"
+GITHUB_USERNAME="minamarkham"
+FOLDERS="$WORKSPACE/icons/folders--gradient/downloads/icon-folders"
 
 DIRECTORIES=(
     $HOME/@Inbox
@@ -16,9 +18,7 @@ DIRECTORIES=(
     $HOME/@Inbox/@Documents
     $HOME/@Inbox/@Folders
     $HOME/@Inbox/@Images
-    $HOME/@Inbox/@Misc
     $HOME/@Inbox/@Movies
-    $HOME/@Inbox/@Outbox
     $HOME/@Inbox/@Screenshots
     $HOME/@Inbox/@Zips
     $HOME/@Projects
@@ -47,71 +47,88 @@ for dir in ${DIRECTORIES[@]}; do
 done
 
 if [[ $(cli_is_installed fileicon) == 1 ]]; then
-	echo "${indent}  ︎︎❤︎ Customizing folder icons…"
-	fileicon set $HOME/@Inbox $WORKSPACE/icons/folders--gradient/downloads/icon-folders/download-folder.png
-	fileicon set $HOME/@Inbox/@Apps $WORKSPACE/icons/folders--gradient/downloads/icon-folders/heart-folder.png
-	fileicon set $HOME/@Inbox/@Audio $WORKSPACE/icons/folders--gradient/downloads/icon-folders/music-folder.png
-	fileicon set $HOME/@Inbox/@Documents $WORKSPACE/icons/folders--gradient/downloads/icon-folders/documents-folder.png
-	fileicon set $HOME/@Inbox/@Folders $WORKSPACE/icons/folders--gradient/downloads/icon-folders/star-folder.png
-	fileicon set $HOME/@Inbox/@Images $WORKSPACE/icons/folders--gradient/downloads/icon-folders/photos-folder.png
-	fileicon set $HOME/@Inbox/@Misc $WORKSPACE/icons/folders--gradient/downloads/icon-folders/bin-folder.png
-	fileicon set $HOME/@Inbox/@Movies $WORKSPACE/icons/folders--gradient/downloads/icon-folders/video-folder.png
-	fileicon set $HOME/@Inbox/@Screenshots $WORKSPACE/icons/folders--gradient/downloads/icon-folders/screenshots-folder.png
-	fileicon set $HOME/@Inbox/@Zips $WORKSPACE/icons/folders--gradient/downloads/icon-folders/smile-folder.png
-	fileicon set $PROJECTS $WORKSPACE/icons/folders--gradient/downloads/icon-folders/crown-folder.png
+    echo "${indent}  ︎︎❤︎ Customizing folder icons…"
+    if [ -d "$INBOX" ]; then
+        fileicon set $INBOX $FOLDERS/download-folder.png
+        fileicon set $INBOX/@Apps $FOLDERS/heart-folder.png
+        fileicon set $INBOX/@Audio $FOLDERS/music-folder.png
+        fileicon set $INBOX/@Documents $FOLDERS/documents-folder.png
+        fileicon set $INBOX/@Folders $FOLDERS/star-folder.png
+        fileicon set $INBOX/@Images $FOLDERS/photos-folder.png
+        fileicon set $INBOX/@Movies $FOLDERS/video-folder.png
+        fileicon set $INBOX/@Screenshots $FOLDERS/screenshots-folder.png
+        fileicon set $INBOX/@Zips $FOLDERS/smile-folder.png
+        fileicon set $PROJECTS $FOLDERS/crown-folder.png
+    fi
 
-	if [ -d "$HOME/Dropbox" ]; then
-		fileicon set $DROPBOX/@financial $WORKSPACE/icons/folders--gradient/downloads/icon-folders/money-folder.png
-		fileicon set $DROPBOX/@legacy $WORKSPACE/icons/folders--gradient/downloads/icon-folders/heart-folder.png
-		fileicon set $DROPBOX/@legal $WORKSPACE/icons/folders--gradient/downloads/icon-folders/doodle-folder.png
-		fileicon set $DROPBOX/@medical $WORKSPACE/icons/folders--gradient/downloads/icon-folders/sparkles-folder.png
-		fileicon set $DROPBOX/apps $WORKSPACE/icons/folders--gradient/downloads/icon-folders/download-folder.png
-		fileicon set $DROPBOX/brag.file $WORKSPACE/icons/folders--gradient/downloads/icon-folders/crown-folder.png
-		fileicon set $DROPBOX/documents $WORKSPACE/icons/folders--gradient/downloads/icon-folders/documents-folder.png
-		fileicon set $DROPBOX/front.porch $WORKSPACE/icons/folders--gradient/downloads/icon-folders/smile-folder.png
-		fileicon set $DROPBOX/learning $WORKSPACE/icons/folders--gradient/downloads/icon-folders/z-js-folder.png
-		fileicon set $DROPBOX/personal $WORKSPACE/icons/folders--gradient/downloads/icon-folders/calligraphy-folder.png
-		fileicon set $DROPBOX/Photos $WORKSPACE/icons/folders--gradient/downloads/icon-folders/photos-folder.png
-		fileicon set $DROPBOX/projects $WORKSPACE/icons/folders--gradient/downloads/icon-folders/code-folder.png
-		fileicon set $DROPBOX/resources $WORKSPACE/icons/folders--gradient/downloads/icon-folders/type-folder.png
-		fileicon set $DROPBOX/shared $WORKSPACE/icons/folders--gradient/downloads/icon-folders/star-folder.png
-		fileicon set $DROPBOX/speaking $WORKSPACE/icons/folders--gradient/downloads/icon-folders/talks-folder.png
-		fileicon set $DROPBOX/the.setup $WORKSPACE/icons/folders--gradient/downloads/icon-folders/home-folder.png
-	fi
-
-	print_in_green "${bold}✓ done!${normal}\n"
+    if [ -d "$HOME/Dropbox" ]; then
+        fileicon set $DROPBOX/@financial $FOLDERS/money-folder.png
+        fileicon set $DROPBOX/@legacy $FOLDERS/heart-folder.png
+        fileicon set $DROPBOX/@legal $FOLDERS/doodle-folder.png
+        fileicon set $DROPBOX/@medical $FOLDERS/sparkles-folder.png
+        fileicon set $DROPBOX/apps $FOLDERS/download-folder.png
+        fileicon set $DROPBOX/brag.file $FOLDERS/crown-folder.png
+        fileicon set $DROPBOX/documents $FOLDERS/documents-folder.png
+        fileicon set $DROPBOX/front.porch $FOLDERS/smile-folder.png
+        fileicon set $DROPBOX/learning $FOLDERS/z-js-folder.png
+        fileicon set $DROPBOX/personal $FOLDERS/calligraphy-folder.png
+        fileicon set $DROPBOX/Photos $FOLDERS/photos-folder.png
+        fileicon set $DROPBOX/projects $FOLDERS/code-folder.png
+        fileicon set $DROPBOX/resources $FOLDERS/type-folder.png
+        fileicon set $DROPBOX/shared $FOLDERS/star-folder.png
+        fileicon set $DROPBOX/speaking $FOLDERS/talks-folder.png
+        fileicon set $DROPBOX/the.setup $FOLDERS/home-folder.png
+    fi
+    print_in_green "${bold}✓ done!${normal}\n"
 else
-	print_error "fileicon must be installed! Skipping."
+    print_error "fileicon must be installed! Skipping."
 fi
 
-step "Symlinking files…"
-symlink_dotfiles
-printf "\n"
+step "Adding dotfiles…"
+if [[ $(cli_is_installed chezmoi) == 1 ]]; then
+    chezmoi init --apply
+    print_in_green "${bold}✓ done!${normal}\n"
+else
+    print_error "chezmoi must be installed! Skipping."
+fi
 
 step "Cloning repositories..."
+REPOS=(
+    cupcake
+    setup
+    speedlify
+    twitter-archive
+    minamarkham
+)
 
-git clone git@github.com:minamarkham/dotfiles.git $HOME/.dotfiles
+REPOS_BEYHIVE=(
+    yonce
+    yonce-vscode
+    yonce-prompt
+    yonce-visual-studio
+    formation
+    httpbey
+)
 
-git clone git@github.com:minamarkham/cupcake.git $PROJECTS/@cupcake
-git clone git@github.com:minamarkham/mdash.wtf.git $PROJECTS/@mdash
-git clone git@github.com:minamarkham/setup.git $PROJECTS/setup
-git clone git@github.com:minamarkham/speedlify.git $PROJECTS/speedlify
-git clone git@github.com:minamarkham/twitter-archive.git $PROJECTS/twitter-archive
-git clone git@github.com:minamarkham/minamarkham.git $PROJECTS/minamarkham
+REPOS_WIP=(
+    711ty
+    beyonce-ipsum
+    xo
+    beygifs
+    partition
+)
 
-git clone git@github.com:minamarkham/yonce.git $BEYHIVE/yonce
-git clone git@github.com:minamarkham/yonce-vscode.git  $BEYHIVE/yonce-vscode
-git clone git@github.com:minamarkham/yonce-prompt.git $BEYHIVE/yonce-prompt
-git clone git@github.com:minamarkham/yonce-visual-studio.git  $BEYHIVE/yonce-visual-studio
+for repo in ${REPOS[@]}; do
+    git clone git@github.com:$GITHUB_USERNAME/$repo.git $PROJECTS
+done
 
-git clone git@github.com:minamarkham/formation.git $BEYHIVE/formation
-git clone git@github.com:minamarkham/httpbey.git $BEYHIVE/httpbey
-git clone git@github.com:minamarkham/711ty.git $BEYHIVE/711ty
+for repo in ${REPOS_BEYHIVE[@]}; do
+    git clone git@github.com:$GITHUB_USERNAME/$repo.git $BEYHIVE
+done
 
-git clone git@github.com:minamarkham/beyonce-ipsum.git $WIP/beyonce-ipsum
-git clone git@github.com:minamarkham/xo.git  $WIP/XO
-git clone git@github.com:minamarkham/beygifs.git $WIP/beygifs
-git clone git@github.com:minamarkham/partition.git  $WIP/partition
+for repo in ${REPOS_WIP[@]}; do
+    git clone git@github.com:$GITHUB_USERNAME/$repo.git $WIP
+done
 
 step "Customizing Mac…"
 if [ $HOSTNAME != $SLAY_HOSTNAME ]; then

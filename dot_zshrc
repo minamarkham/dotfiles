@@ -50,6 +50,7 @@ export EDITOR=nano
 export VISUAL=$EDITOR
 export DROPBOX=$HOME/Dropbox
 export DOTFILES=$HOME/.dotfiles
+export DOTFILES=$HOME/.local/share/chezmoi
 export PROJECTS=$HOME/@Projects
 export BEYHIVE=$PROJECTS/@beyhive
 export WIP=$PROJECTS/@wip

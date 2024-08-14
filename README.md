@@ -69,6 +69,8 @@ chezmoi -v apply
   - Settings Sync
 - Hazel
   - Dropbox Sync
+- Fonts
+  - Fontbase/Dropbox
 
 ## License
 

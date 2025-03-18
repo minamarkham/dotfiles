@@ -1,8 +1,6 @@
-# ~/.dotfiles
+<h1><a name="top" title="dotfiles"></a><br/>~/.📁</h1>
 
-<div align="center">
-
-```
+<pre>
                 _      _          
     |          | | o  | |         
   __|   __ _|_ | |    | |  _   ,  
@@ -10,71 +8,115 @@
  \_/|_/\__/ |_/|__/|_/|__/|__/ \/ 
                |\                 
                |/  by mina        
-```
 
-</div>
+       ~ is where the ❤︎ is        
+</pre>
 
 <pre align="center">
 Managed using <a href="https://www.chezmoi.io/">chezmoi</a>
 </pre>
 
-This are my public dotfiles. These are config files to set up a system the way I like it. They might not work for you, but feel free to steal from them.
+These are my personal dotfiles—the configuration files that help set up my systems exactly how I like them. They might not be perfect for you, but feel free to explore, copy, or adapt them for your own needs!
 
-## Getting started
+## quick start
 
-### Install chezmoi and the dotfiles on any new machine
-
-With a single command:
+To quickly install chezmoi and apply my dotfiles on a new machine, just run:
 
 ```sh
-chezmoi init --apply git@github.com:minamarkham/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply minamarkham
 ```
 
-### Update
+Check out chezmoi's [Quick Start Guide](https://www.chezmoi.io/quick-start/) for more detailed instructions.
 
-On any machine, you can pull and apply the latest changes from your repo with:
+## usage
+
+#### Update dotfiles
+
+Pull and apply the latest changes:
 
 ```sh
 chezmoi update -v
 ```
 
-### Add
+#### Add dotfiles
 
 ```sh
 chezmoi add ~/.zshrc
 ```
 
-### Edit
+#### Edit dotfiles
 
 ```sh
 chezmoi edit ~/.zshrc
 ```
 
-### Preview
+#### Preview changes
 
 ```sh
 chezmoi diff
 ```
 
-### Apply
+#### Apply changes
 
 ```sh
 chezmoi -v apply
 ```
 
-## Synced Elsewhere
-- Raycast
-  - Cloud Sync
-- Visual Studio Code
-  - Settings Sync
-- Hazel
-  - Dropbox Sync
-- Fonts
-  - Fontbase/Dropbox
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
-## License
+## what's inside
+
+- **Homebrew dependencies**: Applications, fonts, etc. ([`Brewfile`](https://github.com/minamarkham/dotfiles/blob/master/Brewfile))
+- **macOS configs**: System-wide macOS settings ([`macos/`](https://github.com/minamarkham/dotfiles/blob/master/macos/))
+- **Zsh configs**: Including my custom [`Yoncé Zsh theme`](https://github.com/minamarkham/yonce-zsh-theme) ([`zshrc/`](https://github.com/minamarkham/dotfiles/tree/master/shell))
+- **VS Code setup**: My [`Yoncé theme`](https://github.com/minamarkham/yonce) ([`vscode/`](https://github.com/minamarkham/dotfiles/tree/master/vscode))
+
+**Additional Configs**:
+- `.aliases` – Shell command shortcuts.
+- `.exports` – Environment variables.
+- `.gitconfig` – Git preferences and aliases.
+- `.gitignore.global` – Global Git ignores.
+- `.path` – System `$PATH` configurations.
+- `.starship.toml` – [Starship](https://starship.rs/) prompt settings.
+- `.zprofile`, `.zshrc` – Zsh shell settings.
+- `.hot-sauce` – [Formation](https://github.com/minamarkham/formation) customizations.
+- `config.yaml` – [Tabby](http://tabby.sh) configurations.
+- `macchina.toml` – [Macchina](https://github.com/Macchina-CLI/macchina) configurations.
+
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
+
+## customize
+
+You can easily add your personal touches using the following files:
+
+### `~/.zsh.local`
+
+Automatically sourced after other shell files. Great for custom aliases or paths:
+
+```sh
+# Add custom paths
+PATH="~/my/custom/path:$PATH"
+export PATH
+
+# Custom aliases
+alias gs="git status"
+```
+
+### `~/.git.local`
+
+Overrides or additional Git settings, ideal for sensitive information:
+
+```gitconfig
+[user]
+  name = Your Name
+  email = you@example.com
+  signingKey = YOURGPGKEY
+```
+
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
+
+## license
 
 The code is available under the [MIT license][license].
 
-<!-- Link labels: -->
 [license]: LICENSE

@@ -1,8 +1,31 @@
 #!/usr/bin/env zsh
 
+# ~/.zshrc
+# =============================================================================
+# Executed by Z shell for interactive shells.
+# See http://zsh.sourceforge.net/
+
 clear
 
+# -------------------------------------------------------------
+# Load dependencies
+# -------------------------------------------------------------
+source $HOME/.exports
+source $HOME/.aliases
+
+# -------------------------------------------------------------
+# Helpers
+# -------------------------------------------------------------
+# Kill all related processes.
+killps() {
+  printf "🟡 Killing processes…\n"
+  kill `ps -ef | grep $1 | awk '{print $2}'`
+  printf "🟡 Restart affected applications!\n"
+}
+
+# -------------------------------------------------------------
 # History setup
+# -------------------------------------------------------------
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=$HISTSIZ
@@ -18,61 +41,33 @@ setopt auto_list # automatically list choices on ambiguous completion
 setopt auto_menu # automatically use menu completion
 setopt always_to_end # move cursor to end if word had one match
 
+# -------------------------------------------------------------
 # Completion system
-autoload -Uz compinit && compinit
-autoload bashcompinit && bashcompinit # load bashcompinit for some old bash completions
+# -------------------------------------------------------------
+# autoload -Uz compinit && compinit
+# autoload bashcompinit && bashcompinit # load bashcompinit for some old bash completions
 
-###############################################################################
-# INSTALL DEPS
-###############################################################################
-if [[ ! -f ~/.zsh/antigen.zsh ]]; then
-  curl -L git.io/antigen > ~/.zsh/antigen.zsh
-fi
+# -------------------------------------------------------------
+# Load private settings
+# -------------------------------------------------------------
+[ -f ~/.zsh.local ] && source ~/.zsh.local
 
-if [[ ! -f ~/.extra ]]; then
-  touch ~/.extra
-fi
+# -------------------------------------------------------------
+# Plugins
+# -------------------------------------------------------------
+# Set up fzf key bindings and fuzzy completion
+# https://github.com/junegunn/fzf
+# source <(fzf --zsh)
 
-###############################################################################
-# PLUGINS && SUCH
-###############################################################################
-source $HOME/.zsh/antigen.zsh
-antigen bundle zpm-zsh/ls
+# Init zoxide
+# https://github.com/ajeetdsouza/zoxide
+# eval "$(zoxide init zsh)"
 
-###############################################################################
-# EXPORTS
-###############################################################################
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export EDITOR=nano
-export VISUAL=$EDITOR
-export DROPBOX=$HOME/Dropbox
-export DOTFILES=$HOME/.dotfiles
-export DOTFILES=$HOME/.local/share/chezmoi
-export PROJECTS=$HOME/@Projects
-export BEYHIVE=$PROJECTS/@beyhive
-export WIP=$PROJECTS/@wip
-
-###############################################################################
-# Load the shell dotfiles, and then some:
-###############################################################################
-if [[ ! -f ~/.zsh/yonce/yonce.zsh ]]
-  antigen theme geometry-zsh/geometry
-then
+# -------------------------------------------------------------
+# Prompt
+# -------------------------------------------------------------
+if [[ ! -f ~/.zsh/yonce/yonce.zsh ]]; then
+  eval "$(starship init zsh)" # https://starship.rs/
 else
-  source $HOME/.zsh/yonce/yonce.zsh
+  [[ $USE_YONCE -eq 1 ]] && source "$HOME/.zsh/yonce/yonce.zsh" # Yoncé
 fi
-
-source $HOME/.path
-source $HOME/.aliases
-source $HOME/.functions
-source $HOME/.extra
-
-antigen apply
-
-###############################################################################
-# PDE SETUP || 2022-02-11T02:04:21-0800
-###############################################################################
-/usr/bin/ssh-add -A >/dev/null 2>&1

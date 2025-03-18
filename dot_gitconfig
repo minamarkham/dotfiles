@@ -9,12 +9,14 @@
 [fetch]
 	prune = true
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.gitignore.global
 	ignorecase = true
 	editor = code --wait
-[includeif "gitdir:~/@Dev/webapp/"]
-	path = .gitconfig-work
-[includeif "gitdir:~/@Dev/@me/"]
-	path = .gitconfig-personal
-[includeif "gitdir:~/@Projects/"]
-	path = .gitconfig-personal
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+[include]
+	path = ~/.git.local

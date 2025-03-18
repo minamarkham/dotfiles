@@ -1,0 +1,16 @@
+# Mac Finder
+.DS_Store
+Icon?
+
+# env
+.env
+env
+
+# build
+/dist
+/build
+*.o
+\#*#
+
+# node
+/node_modules

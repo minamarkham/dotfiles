@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+# ~/.exports :: Shared, safe environment variables
+# =============================================================================
+
+# ──[ editor ]─────────────────────────────────────────────────────────────
+export EDITOR="micro"
+export VISUAL="$EDITOR"
+
+### ──[ Paths & Directories ]────────────────────────────────────────────────
+export PATH="$HOME/bin:/usr/local/bin:$PATH" # Base user paths
+export DOTFILES="$HOME/.local/share/chezmoi"
+export ME="$HOME/me"
+export DROPBOX="$HOME/Dropbox"
+export INBOX="$ME/inbox"
+export PROJECTS="$ME/projects"
+export BEYHIVE="$PROJECTS/@beyhive"
+export PIWARE="$PROJECTS/@pi-ware"
+export WIP="$PROJECTS/_wip"
+
+### ──[ Terminal Appearance ]───────────────────────────────────────────────
+# Customize colors for file types (eza / ls / dircolors)
+export LS_COLORS="$LS_COLORS:di=0;36:ln=0;93:ex=0;35:"
+export STARSHIP_CONFIG="$ZDOTDIR/prompt/yonce/starship.toml" # pills.toml | text.toml
+
+### ──[ SSH / Auth / Agent ]────────────────────────────────────────────────
+# 1Password SSH agent integration (macOS)
+export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+### ──[ Homebrew Settings ]─────────────────────────────────────────────────
+export HOMEBREW_BREWFILE="$HOME/Brewfile"
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_UPDATE_FREQUENCY=86400 # 24 hours
+
+### ──[ Node / NVM ]────────────────────────────────────────────────────────
+export NVM_DIR="$HOME/.nvm"
+
+### ──[ Raspberry Pi / Pico SDK ]───────────────────────────────────────────
+# Raspberry Pi Pico SDK (for C/C++ or FreeRTOS development)
+export PICO_SDK_PATH="$GIT/RP2040-FreeRTOS/pico-sdk"

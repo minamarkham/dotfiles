@@ -1,72 +1,160 @@
+# ~/Brewfile
+# =============================================================================
+# See https://github.com/Homebrew/homebrew-bundle
+
+# Options
+cask_args appdir: "~/Applications"
+
 # Taps
-tap 'homebrew/cask'
-tap 'homebrew/cask-fonts'
-tap 'homebrew/cask-versions'
-tap 'homebrew/bundle'
-tap 'nicoverbruggen/homebrew-cask'
+tap "homebrew/core"
+tap "homebrew/cask"
+tap "homebrew/bundle"
+tap "homebrew/cask-fonts"
+tap "buo/cask-upgrade"
 
-# Binaries
-brew 'awscli'
-brew 'bat' # Used for spatie/visit
-brew 'chezmoi'
-brew 'coreutils' # Those that come with macOS are outdated
-brew 'exa'
-brew 'ffmpeg'
-brew 'gh'
-brew 'git'
-brew 'grep'
-brew 'httpie'
-brew 'hub'
-brew 'jq' # Used for spatie/visit
-brew 'mackup'
-brew 'mas' # Mac App Store manager
-brew 'pkg-config' # https://github.com/driesvints/dotfiles/issues/20
-brew 'svn' # Needed to install fonts
-brew 'tig'
+# -------------------------------------------------------------
+## Shell Programs
+# -------------------------------------------------------------
+brew install \
+  asciinema \           # terminal recording
+  chezmoi \             # dotfiles manager
+  eza \                 # better ls
+  ffmpeg \              # video/audio encoding and conversion
+  fileicon \            # sets custom macOS app icons
+  flyctl \              # fly.io cli
+  git \                 # version control
+  httpie \              # HTTP / API testing testing client
+  jq \                  # JSON processor
+  lazygit \             # tui git client
+  mas \                 # Mac App store manager
+  micro \               # terminal-based text editor
+  node \                # JavaScript runtime
+  nvm \                 # Node version manager
+  starship \            # fast, customizable shell prompt
+  tig \                 # tui git interface
+  vhs \                 # terminal recording
+  watchman \            # file-watching service
+  wget \                # file downloader
+  zoxide                # auto-learning navigation (better cd)
 
-# Spatie Medialibrary
-brew 'jpegoptim'
-brew 'optipng'
-brew 'pngquant'
-brew 'svgo'
-brew 'gifsicle'
+# -------------------------------------------------------------
+# GUI programs
+# -------------------------------------------------------------
+brew install --cask \
+  1password \           # password manager (proprietary)
+  airtable \            # database and collaboration tool
+  backblaze \           # cloud backup service
+  bartender \           # menu bar organizer for macOS
+  beekeeper-studio \    # SQL editor and database manager
+  chatgpt \             # ChatGPT desktop app
+  cleanmymac \          # system cleaning and optimization tool
+  discord \             # VoIP social platform
+  dropbox \             # cloud storage and file syncing
+  fantastical \         # advanced calendar app
+  figma \               # design and prototyping tool
+  firefox \             # web browser
+  fontbase \            # font management tool
+  handbrake \           # open-source video transcoder
+  hazel \               # automated file organization
+  httpie \              # HTTP / API testing testing client
+  hush \                # Safari extension to block cookie banners
+  imageoptim \          # image compression and optimization tool
+  kaleidoscope \        # advanced diff and merge tool
+  notion \              # productivity and note-taking app
+  obsidian \            # markdown-based knowledge management app
+  plex \                # media streaming app
+  raindropio \          # bookmark manager with cloud sync
+  raycast \             # spotlight alternative
+  spotify \             # music streaming
+  twingate \            # remote network access tool
+  ubar \                # dock replacement
+  visual-studio-code \  # code editor
+  warp \                # terminal emulator
+  zoom                  # video conferencing software
 
-# Development
-brew 'node'
+# -------------------------------------------------------------
+# Mac App Store Programs
+# -------------------------------------------------------------
+mas install \
+  1616831348 \ # affinity designer
+  1616822987 \ # affinity photo
+  918858936 \  # airmail
+  953286746 \  # darkroom
+  400169658 \  # friendly social
+  553245401 \  # friendly streaming
+  6443906359 \ # friendly shopping
+  1090488118 \ # gemini
+  992115977 \  # image2icon
+  1303222628 \ # paprika
+  1449415412 \ # tinynotepad
+  1518036000   # sequel ace
 
-# Apps
-cask '1password'
-cask 'discord'
-cask 'docker'
-cask 'figma'
-cask 'firefox'
-cask 'github'
-cask 'google-chrome'
-cask 'imageoptim'
-cask 'slack'
-cask 'visual-studio-code'
-cask 'zoom'
-
-# Fonts
-cask 'font-inconsolata'
-
-# Mac App Store
-mas 'AffinityDesigner', id: 824171161
-mas 'AffinityPhoto', id: 824183456
-mas 'Airmail3', id: 918858936
-mas 'AppCleaner', id: 1013897218
-mas 'Bear', id: 1091189122
-mas 'Divvy', id: 413857545
-mas 'Fantastical2', id: 975937182
-mas 'Gifox', id: 1082624744
-mas 'Kaleidoscope', id: 587512244
-mas 'Keynote', id: 409183694
-mas 'Numbers', id: 409203825
-mas 'Pages', id: 409201541
-mas 'Paprika3', id: 1303222628
-mas 'Pixelmator', id: 407963104
-mas 'Pocket', id: 568494494
-mas 'Resizer', id: 411277085
-mas 'Things3', id: 904280696
-mas 'Trello', id: 1278508951
-mas 'TheUnarchiver', id: 425424353
+# -------------------------------------------------------------
+# VSCode Extensions
+# -------------------------------------------------------------
+code --install-extension \
+  aaron-bond.better-comments \
+  adam-bender.commit-message-editor \
+  alexcvzz.vscode-sqlite \
+  anseki.vscode-color \
+  bernardop.working-sets \
+  bierner.color-info \
+  bierner.emojisense \
+  burkeholland.simple-react-snippets \
+  christian-kohler.path-intellisense \
+  chrmarti.regex \
+  dbaeumer.vscode-eslint \
+  devangtomar.vscode-diverse-dye \
+  dionmunk.vscode-notes \
+  dsznajder.es7-react-js-snippets \
+  eamodio.gitlens \
+  esbenp.prettier-vscode \
+  evan-buss.font-switcher \
+  expo.vscode-expo-tools \
+  fayras.simple-new-file \
+  folke.vscode-monorepo-workspace \
+  fooxly.workspace \
+  formulahendry.auto-close-tag \
+  formulahendry.auto-rename-tag \
+  ginfuru.better-nunjucks \
+  github.copilot \
+  github.copilot-chat \
+  jannisx11.batch-rename-extension \
+  jock.svg \
+  jrebocho.vscode-random \
+  kruemelkatze.vscode-dashboard \
+  lordbrom.highlight-duplicates \
+  miclo.sort-typescript-imports \
+  mike-co.import-sorter \
+  minamarkham.yonce-theme \
+  mrmlnc.vscode-duplicate \
+  ms-azuretools.vscode-docker \
+  ms-vsliveshare.vsliveshare \
+  naumovs.color-highlight \
+  nhoizey.gremlins \
+  pflannery.vscode-versionlens \
+  pkief.material-icon-theme \
+  pnp.polacode \
+  randomfractalsinc.snippets-viewer \
+  redhat.vscode-yaml \
+  ronnidc.nunjucks \
+  samverschueren.final-newline \
+  shardulm94.trailing-spaces \
+  sirtori.indenticator \
+  streetsidesoftware.code-spell-checker \
+  stylelint.vscode-stylelint \
+  tahabasri.snippets \
+  talhabalaj.actual-font-changer \
+  tamasfe.even-better-toml \
+  tombonnike.vscode-status-bar-format-toggle \
+  urbantrout.refactor-css \
+  usernamehw.errorlens \
+  vincaslt.highlight-matching-tag \
+  visualstudioexptteam.intellicode-api-usage-examples \
+  visualstudioexptteam.vscodeintellicode \
+  vitaliymaz.vscode-svg-previewer \
+  vivaxy.vscode-conventional-commits \
+  wayou.vscode-todo-highlight \
+  withfig.fig \
+  xabikos.javascriptsnippets \
+  zhucy.project-tree

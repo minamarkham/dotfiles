@@ -1,0 +1,211 @@
+# starship_yonce.toml
+# =============================================================================
+# Starship cross-shell prompt configuration file.
+#
+# See https://starship.rs/
+# See https://starship.rs/config
+# See https://starship.rs/presets/nerd-font.html##configuration
+
+# DEBUG via:
+# starship explain
+# STARSHIP_LOG=trace starship timings
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+#* Timeout for commands executed by starship (ms)
+command_timeout = 10000
+
+#* Timeout for starship to scan files (ms)
+scan_timeout = 300
+
+#* newline between commands
+# add_newline = false
+
+#* opt-in for individual modules (e.g., aws, docker, gcloud, nodejs, python)
+format = """$all"""
+right_format = """$time$battery"""
+
+# #* Replace the "❯"
+[character]
+success_symbol = "[](green)"
+error_symbol = "[](red)"
+
+# left prompt
+#  user  󰍹 hostname   ~/full/directory/path   branch ↑1 ↓1 {1} +1 •1 ⌀1  
+#  user in 󰍹 hostname in  directory on 󰊢 branch +/-3289 ↑4039↓5 +1 !1 ⌀13 {1} 44 ↠1  127 NOTFOUND 
+#  user in 󰍹 hostname in  directory via 󰋘 v18.18.2 via  v7.3.8 via 󱔎 v3.12.2 as  took ⏱ 1m34s 
+# directory (9ea62157)  REBASING 9/9  +16 ⌀68 {2} 4 ↠1 took ⏱ 19s  1 ERROR  
+
+# right prompt
+# [  00:00 ]   100%↓
+# ⚡ 78%  17:50:56
+
+[battery]
+full_symbol = "󱊣 "
+charging_symbol = "󰂋 "
+discharging_symbol = "󱃌 "
+unknown_symbol = "󰂑 "
+empty_symbol = "󰂎 "
+disabled = false
+
+#* "red" style when capacity is between 0% and 10%
+[[battery.display]]
+threshold = 10
+style = "red"
+
+#* "yellow" style when capacity is between 10% and 30%
+[[battery.display]]
+threshold = 30
+style = "yellow"
+
+#* "green" style when capacity is between 30% and 100%
+[[battery.display]]
+threshold = 100
+style = "green"
+
+#* Show command duration over 10,000 milliseconds (=10 sec)
+[cmd_duration]
+style = "yellow"
+format = "took [⏱ $duration]($style) "
+
+#* truncation length works backwards (i.e., cwd > parent > parent ...)
+[directory]
+read_only = ""
+truncation_length = 5
+truncate_to_repo = true
+style = "cyan"
+format ="[$path]($style)[$read_only]($read_only_style) "
+
+#* Keep in mind that the order matters. For example:
+#* "Important Documents" = " 󰈙  "
+#* will not be replaced, because "Documents" was already substituted before.
+#* So either put "Important Documents" before "Documents" or use the substituted version:
+#* "Important 󰈙 " = " 󰈙  "
+# [directory.substitutions]
+# "~/Documents" = "󰈙 "
+# "~/Downloads" = " "
+# "~/Movies" = "󰿎 "
+# "~/Music" = " "
+# "~/Pictures" = " "
+# "~/@Projects" = "♥ "
+# "~/@Inbox" = " "
+# "~/@WIP" = "󰒡 "
+# "~" = " "
+# "/" = "  "
+
+[git_branch]
+symbol = "󰊢 "
+style = "purple"
+
+[git_commit]
+commit_hash_length = 8
+tag_symbol = "󰓹 "
+format = "[\\($hash$tag\\)]($style) "
+style = "purple"
+
+[git_state]
+format = "[$state( $progress_current/$progress_total)]($style) "
+cherry_pick = " PICKING"
+rebase = " REBASING"
+merge =	" MERGING"
+revert = " REVERTING"
+bisect = " BISECTING"
+am = "AM"
+am_or_rebase = "AM/REBASE"
+disabled = false
+style = "yellow"
+
+[git_status]
+conflicted = "[ ](bold red) "
+ahead = "[↑](bold green)${count} "
+behind = "[↓](bold red)${count} "
+diverged = "[⇡](bold green)${ahead_count}[⇣](bold red)${behind_count} "
+untracked = "⌀${count} "
+stashed = '[{${count}}](dimmed) '
+modified = "[!](bold yellow)${count} "
+staged = "[+](bold green)${count} "
+renamed = "↠${count} "
+deleted = "[ ](bold red)${count} "
+format = "$conflicted$ahead_behind$staged$modified$untracked$stashed$deleted$renamed"
+
+
+[git_metrics]
+disabled = true
+added_style = "green"
+deleted_style = "red"
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+
+[hostname]
+ssh_only = true
+ssh_symbol = "🌐 "
+format = "[$ssh_symbol$hostname]($style) in "
+style = "green dimmed"
+disabled = false
+
+[memory_usage]
+symbol = " "
+disabled = false
+
+[time]
+style = "white dimmed"
+format = "[󰥔 $time]($style) "
+disabled = false
+
+#* makes prompt a single line
+[line_break]
+disabled = true
+
+[localip]
+ssh_only = true
+disabled = false
+
+[sudo]
+style = 'green'
+symbol = ' '
+disabled = false
+
+#* Clear visibility for exit codes
+[status]
+style = "bg:red"
+symbol = "  "
+not_found_symbol = "  "
+not_executable_symbol = "  "
+format = '[$symbol$status $common_meaning$signal_name$maybe_int ]($style) '
+map_symbol = true
+disabled = false
+
+[username]
+disabled = false
+# show_always = true
+style_root = "red"
+style_user = "yellow"
+format ="[$user]($style) in "
+
+[package]
+symbol = ' '
+disabled = true
+
+[nodejs]
+disabled = true
+symbol = "󰋘 "
+
+[php]
+disabled = true
+symbol = " "
+
+[python]
+disabled = true
+symbol = "󱔎 "
+
+[docker_context]
+format = "via [🐋 $context](blue bold)"
+disabled = false
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+detect_folders = []
+
+[jobs]
+symbol = "+ "
+threshold = 4
+format = "background [$symbol$number]($style) "

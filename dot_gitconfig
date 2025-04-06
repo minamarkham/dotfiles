@@ -5,12 +5,18 @@
 	smudge = git-lfs smudge -- %f
 [push]
 	default = simple
+	autoSetupRemote = true
 [fetch]
 	prune = true
 [core]
-	excludesfile = /Users/mina.markham/.gitignore_global
+	excludesfile = ~/.gitignore.global
 	ignorecase = true
-[includeif "gitdir:~/@Projects/@tinyspeck/"]
-	path = .gitconfig-work
-[includeif "gitdir:~/@Projects/@me/"]
-	path = .gitconfig-personal
+	editor = code --wait
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+[include]
+	path = ~/.git.local

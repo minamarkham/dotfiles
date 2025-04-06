@@ -1,0 +1,102 @@
+#!/usr/bin/env zsh
+
+# ~/.aliases
+# =============================================================================
+alias please='sudo'
+alias zdot='cd $ZDOTDIR'
+alias quit='exit'
+alias dot='chezmoi'
+
+### ──[ editor ]───────────────────────────────────────────────────────────────
+alias nano='micro'                                          # Use micro instead of nano
+alias cls='clear'                                           # Clear the terminal
+alias c="clear"
+
+### ──[ git shortcuts ]────────────────────────────────────────────────────────
+alias add='git add'                                         # Stage changes
+alias commit='git commit'                                   # Commit staged changes
+alias log='git log --oneline --graph'                       # View commit history as a simple graph
+alias pull='git pull'                                       # Pull latest changes from remote
+alias push='git push'                                       # Push local commits to remote
+alias status='git status'                                   # Show current branch, staged/unstaged changes
+
+### ──[ directory navigation ]─────────────────────────────────────────────────
+alias ..='cd ..'                                            # Move up one directory
+alias ...='cd ../..'                                        # Move up two directories
+alias ~='cd ~'                                              # Go to home directory
+
+### ──[ better defaults ]──────────────────────────────────────────────────────
+alias rm='rm -i'                                            # interactive rm
+alias cp='cp -i'                                            # interactive cp
+alias mv='mv -i'                                            # interactive mv
+
+### ──[ directory listing (via eza) ]──────────────────────────────────────────
+alias ls='eza --long --header --icons --all'                # Detailed list with icons and headers
+alias ll='eza --long --header --icons --all'                # Long detailed view (same as ls)
+alias la='eza --long --header --icons --all --all'          # Include hidden files
+alias lt='eza --tree'                                       # Tree view
+alias l1='eza -1'                                           # One entry per line
+
+### ──[ power management ]─────────────────────────────────────────────────────
+alias reboot='sudo reboot'                                  # Reboot system
+alias shutdown='sudo shutdown now'                          # Graceful shutdown without `-h` flag
+alias rs='sudo shutdown -r now'                             # Restart immediately
+alias sd='sudo shutdown -h now'                             # Shutdown immediately
+
+### ──[ tool aliases ]─────────────────────────────────────────────────────────
+alias python='python3'                                      # Use Python 3 by default
+alias gui='startx'                                          # Start the GUI/X11 session (if installed)
+alias grep='grep --color=auto'                              # Highlight matches in `grep`
+
+### ──[ raspberry pi info ]────────────────────────────────────────────────────
+alias pi-temp='vcgencmd measure_temp'                       # Show Raspberry Pi CPU temperature
+alias pi-volt='vcgencmd measure_volts'                      # Show Raspberry Pi voltage
+alias pi-freq='vcgencmd measure_clock arm'                  # Display ARM CPU frequency
+
+### ──[ system info / utilities ]──────────────────────────────────────────────
+alias update='sudo apt update && sudo apt full-upgrade -y'  # System update (Debian/Ubuntu)
+alias mem='free -h'                                         # Display memory usage (human readable)
+alias cpu='lscpu'                                           # Display CPU architecture and stats
+alias ip='hostname -I'                                      # Show local IP addresses
+alias ports='ss -tuln'                                      # Show open ports and listening services
+alias ssid='iwgetid -r'                                     # Show connected Wi-Fi network (SSID)
+alias usage='top -o %CPU'                                   # Show top processes sorted by CPU usage
+
+### ──[ enhanced cat (bat) ]───────────────────────────────────────────────────
+if command -v batcat &> /dev/null; then
+  alias cat='batcat'                                        # Use batcat if available
+fi
+
+### ──[ project-specific / personal ]──────────────────────────────────────────
+alias doTartlet='cd /var/www/next/tartlet && pm2 stop tartlet && sudo git pull
+ && yarn && yarn build && pm2 start tartlet'
+alias doPlex='sudo systemctl restart plexmediaserver'
+alias cupcake='cd "$PROJECTS/mina.codes"'
+
+### ──[ file & dotfile shortcuts ]─────────────────────────────────────────────
+alias editHosts='code /etc/hosts'                           # Edit system hosts file
+alias profile='code $ZDOTDIR/.zprofile'                     # Edit zprofile
+alias aliases='code $ZDOTDIR/.aliases'                      # Edit aliases
+alias dotfiles='cd "$DOTFILES"'                             # Go to dotfiles repo
+alias library='cd "$HOME/Library"'                          # macOS Library directory
+alias repos="find . -name .git -type d -prune | sort"
+
+### ──[ SSH / remote access ]──────────────────────────────────────────────────
+alias connect.tart='ssh tart.local'                         # Connect to tart.local via SSH
+
+### ──[ macOS specific ]───────────────────────────────────────────────────────
+alias noDS='find . -type f -name "*.DS_Store" -ls -delete'  # Delete .DS_Store files
+
+# Show/Hide hidden files in Finder
+alias showFiles='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
+alias hideFiles='defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder'
+
+# Hide/show desktop icons (for presenting)
+alias showdesktop='defaults write com.apple.finder CreateDesktop -bool true && killall Finder'
+alias hidedesktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
+
+### ──[ fun / personal expressions ]───────────────────────────────────────────
+alias shrug='echo "¯\\_(ツ)_/¯" | pbcopy'
+
+### ──[ suffix aliases ]───────────────────────────────────────────────────────
+alias -s txt='code -t'                                        # Open .txt files in terminal code editor

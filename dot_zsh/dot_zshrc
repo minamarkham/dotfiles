@@ -1,0 +1,90 @@
+#!/usr/bin/env zsh
+
+clear
+
+# ~/.zshrc :: zsh user settings
+# =========================================================================
+
+# ──[ dependencies ]───────────────────────────────────────────────────────
+[[ -f $ZDOTDIR/.aliases ]] && source $ZDOTDIR/.aliases
+[[ -f $ZDOTDIR/.functions ]] && source $ZDOTDIR/.functions
+
+# ──[ zsh: options ]────────────────────────────────────────────────────────
+setopt ALWAYS_TO_END            # move cursor to end if word had one match
+setopt APPEND_HISTORY           # Append new history lines to the history file (instead of overwriting it)
+setopt AUTO_CD                  # change directory just by typing folder name
+setopt AUTO_LIST                # automatically list choices on ambiguous completion
+setopt AUTO_MENU                # automatically use menu completion
+setopt AUTO_PUSHD               # Push dir onto stack with cd
+setopt CORRECT                  # Correct minor spelling mistakes
+setopt CORRECT_ALL              # autocorrect commands
+setopt EXTENDED_GLOB            # Enable advanced globbing (e.g. `**/*.txt~file*`)
+setopt HIST_EXPIRE_DUPS_FIRST   # Expire duplicate entries first when trimming history
+setopt HIST_IGNORE_ALL_DUPS     # remove older duplicate entries from history
+setopt HIST_REDUCE_BLANKS       # Remove extra blanks from each command in the history
+setopt INC_APPEND_HISTORY       # save history entries as soon as they are entered
+setopt KSH_OPTION_PRINT         # Print values of options when set
+setopt PUSHD_IGNORE_DUPS        # Don't store duplicates in dir stack
+setopt SHARE_HISTORY            # Share command history across all open Zsh sessions
+unsetopt NOMATCH                # Prevent errors when globs don't match
+
+# ──[ zsh: history settings ]───────────────────────────────────────────────
+HISTFILE=$ZDOTDIR/.zsh_history
+HISTSIZE=100000
+SAVEHIST=$HISTSIZE
+
+# ──[ zsh: autocompletion ]─────────────────────────────────────────────────
+autoload -Uz compinit && compinit     # Initialize Zsh's completion system.
+autoload bashcompinit && bashcompinit # load bashcompinit for some old bash completions
+
+# ──[ zsh: autoloads ]──────────────────────────────────────────────────────
+# autoload zmv # Autoload zmv for powerful renaming
+# autoload -Uz colors && colors
+
+# ──[ zsh: plugin management ]──────────────────────────────────────────────
+# [[ -f $ZDOTDIR/.plugins ]] && source $ZDOTDIR/.plugins
+
+# ──[ tools: fzf ]─────────────────────( https://github.com/junegunn/fzf )──
+# fzf key bindings and fuzzy completion
+# command -v fzf >/dev/null && source <(fzf --zsh)
+
+# ──[ tools: zoxide ]────────────( https://github.com/ajeetdsouza/zoxide )──
+# smart directory jumping
+# command -v zoxide >/dev/null && eval "$(zoxide init zsh)" # Init zoxide
+
+# ──[ tools: autosuggestions ]──────────────────────────────────────────────
+# Enable auto suggestions if installed
+if [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+# ──[ tools: syntax highlighting ]──────────────────────────────────────────
+# Enable syntax highlighting if installed
+if [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# ──[ tools: nvm ]──────────────────────────────────────────────────────────
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# ──[ prompt ]─────────────────────────────────────────────────────────────
+eval "$(starship init zsh)" # https://starship.rs/
+# source "${ZDOTDIR:-$HOME}/.zsh/prompt.zsh"
+# source ~/.zsh/alien/alien.zsh
+# source the blox prompt + customizations
+# source ~/.zsh/blox/blox.zsh
+# source $(brew --prefix)/opt/spaceship/spaceship.zsh
+# source ~/.zsh/yonce/yonce.zsh
+# source ~/.zsh/yonce/yonce2.zsh
+# fpath+=(~/.zsh/pure)
+# autoload -U promptinit; promptinit
+# prompt pure
+
+# ──[ optional: fun things ]────────────────────────────────────────────────
+# echo "\n"
+# command -v screenfetch >/dev/null && screenfetch # Show system info at shell startup
+# command -v pi-status >/dev/null && pi-status # Raspberry Pi info in MOTD-like fashion
+
+# ──[ local zsh settings ]──────────────────────────────────────────────────
+[[ -f "$ZDOTDIR/.zsh.local" ]] && source "$ZDOTDIR/.zsh.local"

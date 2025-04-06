@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+# ~/.zprofile :: Login shell config (runs once per login)
+# =========================================================================
+# .zprofile is sourced on login shells and before .zshrc.
+#  As a general rule, it should not change the shell environment at all.
+
+# === PATH setup ===
+# Prepend user-local bin directories
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
+
+# === Environment variables ===
+[[ -f $ZDOTDIR/.exports ]] && source $ZDOTDIR/.exports
+
+# === Agents (login-only background services) ===
+# Homebrew shell setup
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# === Source ~/.zshrc for interactive setup ===
+[[ -f "$HOME/.zshrc" ]] && source "$HOME/.zshrc"

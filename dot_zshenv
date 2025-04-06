@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+# ~/.zshenv :: basic environment setup
+# =========================================================================
+# Minimal env setup, sourced by *every* Zsh invocation (login + non-login)
+# Avoid anything interactive here
+
+# Set base dotfiles location
+export ZDOTDIR="$HOME/.zsh"
+
+### ──[ user exports ]─────────────────────────────────────────────────────
+# Set locale to prevent warnings (e.g. on Raspberry Pi or SSH)
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"

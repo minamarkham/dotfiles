@@ -1,0 +1,198 @@
+#!/usr/bin/env zsh
+
+# ~/.functions
+# =========================================================================
+
+### ──[ File Utilities ]──────────────────────────────────────────────────────
+
+# 📦 Extract various archive types easily
+extract() {
+	if [[ -f "$1" ]]; then
+		case "$1" in
+		*.tar.bz2|*.tbz2)   tar xvjf "$1"    ;;
+		*.tar.gz|*.tgz)     tar xvzf "$1"    ;;
+		*.tar.xz)           tar xvJf "$1"    ;;
+		*.tar)              tar xvf "$1"     ;;
+		*.bz2)              bunzip2 "$1"     ;;
+		*.gz)               gunzip "$1"      ;;
+		*.rar)              unrar x "$1"     ;;
+		*.zip)              unzip "$1"       ;;
+		*.Z)                uncompress "$1"  ;;
+		*.7z)               7z x "$1"        ;;
+		*) echo "❌ Cannot extract '$1': unsupported format" ;;
+		esac
+	else
+		echo "❌ '$1' is not a valid file"
+	fi
+}
+
+# 🚀 Git add + commit + push with optional commit message
+gitsync() {
+	local msg="${1:-Uploaded @ $(date)}"
+	git add .
+	git commit -m "$msg"
+	git push
+}
+
+# 📝 Create an empty markdown file
+mdfile() {
+	touch "untitled.md"
+	echo "📝 Created: untitled.md"
+}
+
+# 🐚 Create a starter ZSH script if it doesn't exist
+zfile() {
+	local file="untitled.zsh"
+	if [[ ! -f "$file" ]]; then
+		cat <<EOF > "$file"
+#!/usr/bin/env zsh
+
+#
+# Version x.y.z
+EOF
+		chmod +x "$file"
+		echo "🧩 Created: $file"
+	else
+		echo "⚠️ File already exists: $file"
+	fi
+}
+
+# 💽 Show disk usage in human-readable form
+dfh() {
+	df -h | grep -v tmpfs
+}
+
+### ──[ Git Helpers ]─────────────────────────────────────────────────────────
+
+# 🚀 Git add + commit + push with optional commit message
+gitsync() {
+  local msg="${1:-Uploaded @ $(date)}"
+  git add .
+  git commit -m "$msg"
+  git push
+}
+
+### ──[ Raspberry Pi & Local Deployment ]─────────────────────────────────────
+
+# 🌡️ Get CPU temperature (if `vcgencmd` is available)
+get_temp() {
+  if command -v vcgencmd >/dev/null; then
+    vcgencmd measure_temp
+  else
+    echo "⚠️ vcgencmd not found. Is raspi-config installed?"
+  fi
+}
+
+# 🍓 Show Raspberry Pi system status
+pi-status() {
+  echo "\n"
+  echo "🍓 Raspberry Pi Status"
+  echo "-----------------------"
+  echo "📦 Hostname:      $(hostname)"
+  echo "🕒 Uptime:        $(uptime -p)"
+  echo "🌡️ CPU Temp:      $(get_temp)"
+  echo "⚡ Voltage:       $(vcgencmd measure_volts | cut -d '=' -f2)"
+  echo "📦 Disk Usage:    $(df -h / | awk 'NR==2 {print $5}')"
+  echo "🌐 IP Address:    $(hostname -I | awk '{print $1}')"
+}
+
+# 🥧 Bake `tart.local` static site to live server dir
+bake-tart() {
+  local SRC="$HOME/@workspace/tart.local"
+  local WWW="www"
+  local DIR="/var/www/html"
+
+  if [[ ! -d "$SRC/$WWW" ]]; then
+    echo "❌ Source folder '$SRC/$WWW' does not exist."
+    return 1
+  fi
+
+  mkdir -p "$DIR"
+  cp -r "$SRC/$WWW" "$DIR"
+  echo "✅ Copied '$WWW' from repo to '$DIR'"
+}
+
+### ──[ Audio Utilities ]─────────────────────────────────────────────────────
+BONBON="tart.local:/mnt/mediastorage/Bonbon/Media/_inbox"
+
+# 📤 Push audio files to media server
+# pushaudio ~/Music/track1.mp3 ~/Music/track2.mp3
+pushaudio() {
+  rsync -avh --no-owner --no-group "$@" --rsync-path="sudo rsync" "$BONBON"
+}
+
+# 🎧 Download from Soundgasm and upload to Raspberry Pi
+# fetchSoundgasm "https://soundgasm.net/u/username/track-title"
+fetchSoundgasm() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: fetchSoundgasm <soundgasm URL>"
+    return 1
+  fi
+
+  local URL="$1"
+  echo "🌐 Fetching Soundgasm page: $URL"
+
+  local HTML MP3_URL DISPLAY_NAME FILENAME
+  HTML=$(curl -s "$URL")
+  MP3_URL=$(echo "$HTML" | grep -o 'https://media.soundgasm.net/sounds/[^"]*')
+
+  if [[ -z "$MP3_URL" ]]; then
+    echo "❌ Could not find MP3 URL in page."
+    return 1
+  fi
+
+  DISPLAY_NAME=$(echo "$HTML" | grep -oP '(?<=<div class="sgd-filename">)[^<]*' | head -n 1)
+  if [[ -z "$DISPLAY_NAME" ]]; then
+    echo "⚠️ No display name found — using basename."
+    FILENAME=$(basename "$MP3_URL")
+  else
+    FILENAME="$(echo "$DISPLAY_NAME" | tr ' /' '__' | sed 's/[^a-zA-Z0-9._-]//g').mp3"
+  fi
+
+  echo "🎧 Downloading as: $FILENAME"
+  curl -L "$MP3_URL" -o "$FILENAME" > /dev/null
+
+  echo "📤 Uploading $FILENAME to $BONBON"
+  rsync -avh --no-owner --no-group "$FILENAME" --rsync-path="sudo rsync" "$BONBON" > /dev/null
+
+  if [[ $? -eq 0 ]]; then
+    echo "🗑️ Deleting local copy: $FILENAME"
+    rm -f "$FILENAME"
+  else
+    echo "⚠️ Upload failed — keeping local copy."
+  fi
+
+  echo "✅ All done!"
+}
+
+### ──[ Remote Sync Utilities ]───────────────────────────────────────────────
+
+# 🔼 Push to tartOS from local to remote
+# push.tart ./bin "projects/tartOS/bin"
+# rsync ./bin to user@12.879.1.130:projects/tartOS/bin
+push.tart() {
+  local source="$1"
+  local destination="$2"
+
+  if [[ -z "$source" || -z "$destination" ]]; then
+    echo "Usage: push.tart <SOURCE> <DESTINATION>"
+    return 1
+  fi
+
+  rsync -avh --progress "$source" "mina@192.168.1.130:$destination"
+}
+
+# 🔽 Pull from tartOS from remote to local
+# pull.tart ./bin "projects/tartOS/bin"
+# rsync projects/tartOS/bin from user@12.879.1.130 to ./bin
+pull.tart() {
+  local source="$1"
+  local destination="$2"
+
+  if [[ -z "$source" || -z "$destination" ]]; then
+    echo "Usage: pull.tart <SOURCE> <DESTINATION>"
+    return 1
+  fi
+
+  rsync -avh --progress "mina@192.168.1.130:$source" "$destination"
+}

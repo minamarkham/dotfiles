@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+# ~/.zsh.local :: private or per-machine overrides
+# =========================================================================
+# Example: Add a colored prompt or load a Zsh plugin manager if desired.
+# If using a plugin manager (like zplug or antigen), initialize it here.
+
+# Custom aliases

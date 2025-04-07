@@ -65,13 +65,6 @@ chezmoi -v apply
 <div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
 ## what's inside
-
-- **Homebrew dependencies**: Applications, fonts, etc. ([`Brewfile`](https://github.com/minamarkham/dotfiles/blob/master/Brewfile))
-- **macOS configs**: System-wide macOS settings ([`macos/`](https://github.com/minamarkham/dotfiles/blob/master/macos/))
-- **Zsh configs**: Including my custom [`Yoncé Zsh theme`](https://github.com/minamarkham/yonce-zsh-theme) ([`zshrc/`](https://github.com/minamarkham/dotfiles/tree/master/shell))
-- **VS Code setup**: My [`Yoncé theme`](https://github.com/minamarkham/yonce) ([`vscode/`](https://github.com/minamarkham/dotfiles/tree/master/vscode))
-
-**Additional Configs**:
 - `.aliases` – Shell command shortcuts.
 - `.exports` – Environment variables.
 - `.gitconfig` – Git preferences and aliases.
@@ -79,9 +72,6 @@ chezmoi -v apply
 - `.path` – System `$PATH` configurations.
 - `.starship.toml` – [Starship](https://starship.rs/) prompt settings.
 - `.zprofile`, `.zshrc` – Zsh shell settings.
-- `.hot-sauce` – [Formation](https://github.com/minamarkham/formation) customizations.
-- `config.yaml` – [Tabby](http://tabby.sh) configurations.
-- `macchina.toml` – [Macchina](https://github.com/Macchina-CLI/macchina) configurations.
 
 <div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
